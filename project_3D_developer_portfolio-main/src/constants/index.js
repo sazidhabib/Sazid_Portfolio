@@ -19,8 +19,8 @@ import {
   starbucks,
   tesla,
   shopify,
-  carrent,
-  jobit,
+  snapshop,
+  movie,
   tripguide,
   threejs,
 } from "../assets";
@@ -249,8 +249,7 @@ const projects = [
         color: "green-text-gradient",
       },
     ],
-    image:
-      "https://private-user-images.githubusercontent.com/68610034/389196124-58e724d7-7f33-41a9-9a94-64c4ddd7bbc0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzM0MDUzNjQsIm5iZiI6MTczMzQwNTA2NCwicGF0aCI6Ii82ODYxMDAzNC8zODkxOTYxMjQtNThlNzI0ZDctN2YzMy00MWE5LTlhOTQtNjRjNGRkZDdiYmMwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMDUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjA1VDEzMjQyNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWY0MDY3ZjExYjg1NGZkZDAwNDIxNmM5ZmRiNjU4ZGQ0N2RjZjZhODMxZjMxNWYyNDMxY2M1YmNkNWY2Nzc3ZmEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.gg7e7pzyqn1g8iqcFhM4EzArpwxqkriK-lh2MKsHfmM",
+    image: snapshop,
     source_code_link: "https://github.com/sazidhabib/SnapShop_e-commerce",
   },
   {
@@ -271,8 +270,7 @@ const projects = [
         color: "pink-text-gradient",
       },
     ],
-    image:
-      "https://private-user-images.githubusercontent.com/68610034/389198753-2f416605-e9b6-48b9-aeb6-476df0dfc3e1.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzM0MDk1OTgsIm5iZiI6MTczMzQwOTI5OCwicGF0aCI6Ii82ODYxMDAzNC8zODkxOTg3NTMtMmY0MTY2MDUtZTliNi00OGI5LWFlYjYtNDc2ZGYwZGZjM2UxLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMDUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjA1VDE0MzQ1OFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWMzNzgyZTUwYzM1MDgyZjVhNzI5ZDFhYzgzYTVlOTM5NzE1MWY3ZjJhZWFiMjFmYTBlZGJhYmI0OGJmZjU0YWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.gyqRTNmOci9hYXZb8-ASs40TgdpiUxlPc4TqZTtgOgg",
+    image: movie,
     source_code_link: "https://github.com/sazidhabib/MovieListingWebsite",
   },
 ];

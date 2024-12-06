@@ -76,7 +76,7 @@ const Skills = () => {
           <h2 className="text-3xl font-bold text-center mb-4">Skills</h2>
           <p className="text-center text-gray-600 mb-10">
             Here are some of my skills on which I have been working for the past
-            3 years.
+            1 years.
           </p>
         </motion.div>
 

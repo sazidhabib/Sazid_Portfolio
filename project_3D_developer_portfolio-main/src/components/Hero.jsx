@@ -9,7 +9,7 @@ const Hero = () => {
       {/* Content Container */}
       <div className="flex flex-col px-6 items-center lg:flex-row gap-10 max-w-7xl my-auto mx-auto">
         {/* Bio Section */}
-        <div className="max-w-md mx-auto ">
+        <div className="max-w-md mx-auto mt-10">
           {/* <div className="flex flex-col justify-center items-center">
             <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
             <div className="w-1 sm:h-80 h-40 violet-gradient" />

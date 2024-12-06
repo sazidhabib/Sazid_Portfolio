@@ -16,6 +16,13 @@ const ProjectCard = ({
   image,
   source_code_link,
 }) => {
+  const truncateText = (text, wordLimit) => {
+    const words = text.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : text;
+  };
+
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
@@ -49,7 +56,9 @@ const ProjectCard = ({
 
         <div className="mt-5">
           <h3 className="text-white font-bold text-[24px]">{name}</h3>
-          <p className="mt-2 text-secondary text-[14px]">{description}</p>
+          <p className="mt-2 text-secondary text-[14px]">
+            {truncateText(description, 40)}
+          </p>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
