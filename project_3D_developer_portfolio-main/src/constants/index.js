@@ -66,11 +66,11 @@ const services = [
 const technologies = [
   {
     name: "HTML 5",
-    icon: html,
+    icon: nodejs,
   },
   {
     name: "CSS 3",
-    icon: css,
+    icon: mongodb,
   },
   {
     name: "JavaScript",
