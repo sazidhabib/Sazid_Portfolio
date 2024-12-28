@@ -23,6 +23,7 @@ import {
   movie,
   tripguide,
   threejs,
+  shopCard,
 } from "../assets";
 
 export const navLinks = [
@@ -207,7 +208,7 @@ const projects = [
       "A pharmacy-based e-commerce platform offering a seamless shopping experience for medicines and healthcare products. Built using the MERN stack, PharmaSphere features a secure payment system with Stripe, a dynamic admin panel for inventory management, and a user-friendly interface with advanced search and sorting capabilities",
     tags: [
       {
-        name: "react",
+        name: "React",
         color: "blue-text-gradient",
       },
       {
@@ -215,7 +216,7 @@ const projects = [
         color: "green-text-gradient",
       },
       {
-        name: "tailwind",
+        name: "Tailwind",
         color: "pink-text-gradient",
       },
       {
@@ -237,7 +238,7 @@ const projects = [
       "This is a responsive e-commerce platform built with TypeScript, React, and Tailwind CSS. It features product management, user authentication, user information and user-specific functionalities such as a wishlist and shopping cart.",
     tags: [
       {
-        name: "react",
+        name: "React",
         color: "blue-text-gradient",
       },
       {
@@ -262,20 +263,41 @@ const projects = [
       "A simple and user-friendly website to explore movies and TV shows, built using React and styled with styled-components or Tailwind CSS. This project allows users to keep track of their favorite movies and provides features for managing a personal watchlist.",
     tags: [
       {
-        name: "nextjs",
+        name: "React",
         color: "blue-text-gradient",
       },
       {
-        name: "supabase",
+        name: "JavaScript",
         color: "green-text-gradient",
       },
       {
-        name: "css",
+        name: "useContext",
         color: "pink-text-gradient",
       },
     ],
     image: movie,
     source_code_link: "https://github.com/sazidhabib/MovieListingWebsite",
+  },
+  {
+    name: "Product Detail & Add to Cart",
+    description:
+      "This project is a responsive product detail page built with React, JavaScript, and useContext. The page allows users to select product options such as color, size, and quantity while dynamically updating the product image, price, and cart details.",
+    tags: [
+      {
+        name: "React",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "JavaScript",
+        color: "green-text-gradient",
+      },
+      {
+        name: "UseContext",
+        color: "pink-text-gradient",
+      },
+    ],
+    image: shopCard,
+    source_code_link: "https://github.com/sazidhabib/shopcardreact/tree/master",
   },
 ];
 

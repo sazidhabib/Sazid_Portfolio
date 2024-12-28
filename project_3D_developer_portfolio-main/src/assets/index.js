@@ -28,6 +28,7 @@ import tesla from "./company/tesla.png";
 
 import snapshop from "./snapshop.webp";
 import movie from "./movie.webp";
+import shopCard from "./shopCard.webp";
 import tripguide from "./tripguide.png";
 
 export {
@@ -59,4 +60,5 @@ export {
   snapshop,
   movie,
   tripguide,
+  shopCard,
 };

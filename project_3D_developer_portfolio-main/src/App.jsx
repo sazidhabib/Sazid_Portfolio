@@ -13,6 +13,7 @@ import {
 } from "./components";
 import HeroNew from "./components/HeroNew";
 import Skills from "./components/Skills";
+
 import Footer from "./components/Footer";
 
 const App = () => {
