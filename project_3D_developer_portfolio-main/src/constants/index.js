@@ -24,6 +24,7 @@ import {
   tripguide,
   threejs,
   shopCard,
+  FoodOrder,
 } from "../assets";
 
 export const navLinks = [
@@ -298,6 +299,31 @@ const projects = [
     ],
     image: shopCard,
     source_code_link: "https://github.com/sazidhabib/shopcardreact/tree/master",
+  },
+  {
+    name: "Food Ordering App",
+    description:
+      "This project is a responsive product detail page built with React, JavaScript, and useContext. The page allows users to select product options such as color, size, and quantity while dynamically updating the product image, price, and cart details.",
+    tags: [
+      {
+        name: "React",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "JavaScript",
+        color: "green-text-gradient",
+      },
+      {
+        name: "Redux",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "Router",
+        color: "green-text-gradient",
+      },
+    ],
+    image: FoodOrder,
+    source_code_link: "https://github.com/sazidhabib/FoodCardApp_React_Redux",
   },
 ];
 

@@ -30,6 +30,7 @@ import snapshop from "./snapshop.webp";
 import movie from "./movie.webp";
 import shopCard from "./shopCard.webp";
 import tripguide from "./tripguide.png";
+import FoodOrder from "./FoodOrder.webp";
 
 export {
   logo,
@@ -61,4 +62,5 @@ export {
   movie,
   tripguide,
   shopCard,
+  FoodOrder,
 };
