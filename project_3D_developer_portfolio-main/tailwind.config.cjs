@@ -21,6 +21,20 @@ module.exports = {
       backgroundImage: {
         "hero-pattern": "url('/src/assets/herobg.png')",
       },
+      animation: {
+        scroll: "scroll 30s linear infinite",
+        "scroll-reverse": "scroll-reverse 30s linear infinite",
+      },
+      keyframes: {
+        scroll: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+        "scroll-reverse": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0)" },
+        },
+      },
     },
   },
   plugins: [],

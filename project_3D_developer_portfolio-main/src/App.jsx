@@ -15,6 +15,7 @@ import HeroNew from "./components/HeroNew";
 import Skills from "./components/Skills";
 
 import Footer from "./components/Footer";
+import SkillShow from "./components/SkillShow";
 
 const App = () => {
   return (
@@ -28,7 +29,7 @@ const App = () => {
         <About />
         <Skills />
         <Experience />
-
+        <SkillShow />
         <Tech />
         <div className="relative z-0">
           <Works />
