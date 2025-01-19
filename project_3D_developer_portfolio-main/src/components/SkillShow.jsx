@@ -1,4 +1,5 @@
 import React from "react";
+import { technologies } from "../constants";
 
 const SkillShow = () => {
   const row1 = [
@@ -37,12 +38,12 @@ const SkillShow = () => {
         {/* First Marquee */}
         <div className="relative w-full overflow-hidden mask-linear mb-8">
           <div className={`${marqueeGroupClass}`}>
-            {row1.map((el, index) => (
+            {technologies.map((el, index) => (
               <div key={index} className="flex-shrink-0">
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2"
+                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
                 />
               </div>
             ))}
@@ -51,7 +52,7 @@ const SkillShow = () => {
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2"
+                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
                 />
               </div>
             ))}
