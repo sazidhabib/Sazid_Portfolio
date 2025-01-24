@@ -18,6 +18,7 @@ import {
   githubnew,
   netlify,
   vscode,
+  router,
 } from "../assets";
 
 const SkillShow = () => {
@@ -25,6 +26,7 @@ const SkillShow = () => {
     javascriptnew,
     postman,
     react,
+    router,
     reduxnew,
     typescriptnew,
     tailwindcss,

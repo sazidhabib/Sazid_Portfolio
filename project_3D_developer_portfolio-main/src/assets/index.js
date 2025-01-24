@@ -48,6 +48,7 @@ import python from "./Python.png";
 import githubnew from "./githubnew.png";
 import netlify from "./Netlify.png";
 import vscode from "./vscode.png";
+import router from "./router.webp";
 
 export {
   logo,
@@ -97,4 +98,5 @@ export {
   githubnew,
   netlify,
   vscode,
+  router,
 };
