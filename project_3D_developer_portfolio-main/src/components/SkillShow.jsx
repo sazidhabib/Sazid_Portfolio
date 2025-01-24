@@ -83,7 +83,7 @@ const SkillShow = () => {
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
+                  className="rounded-lg shadow-md object-contain w-20 h-10 sm:w-28 sm:h-14 lg:w-36 lg:h-16 xl:w-36 xl:h-16 bg-gray-50 p-2"
                 />
               </div>
             ))}
@@ -92,7 +92,7 @@ const SkillShow = () => {
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
+                  className="rounded-lg shadow-md object-contain w-20 h-10 sm:w-28 sm:h-14 lg:w-36 lg:h-16 xl:w-36 xl:h-16 bg-gray-50 px-2"
                 />
               </div>
             ))}
@@ -110,7 +110,7 @@ const SkillShow = () => {
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
+                  className="rounded-lg shadow-md object-contain w-20 h-10 sm:w-28 sm:h-14 lg:w-36 lg:h-16 xl:w-36 xl:h-16 bg-gray-50 px-2"
                 />
               </div>
             ))}
@@ -119,7 +119,7 @@ const SkillShow = () => {
                 <img
                   src={el}
                   alt="Company logo"
-                  className="rounded-lg shadow-md object-contain w-40 h-20 mx-2 bg-gray-50 px-2"
+                  className="rounded-lg shadow-md object-contain w-20 h-10 sm:w-28 sm:h-14 lg:w-36 lg:h-16 xl:w-36 xl:h-16 bg-gray-50 px-2"
                 />
               </div>
             ))}

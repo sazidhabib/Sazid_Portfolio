@@ -67,4 +67,4 @@ const skill = () => {
   );
 };
 
-export default SectionWrapper(skill, "project");
+export default SectionWrapper(skill, "skill");
