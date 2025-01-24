@@ -31,6 +31,23 @@ import movie from "./movie.webp";
 import shopCard from "./shopCard.webp";
 import tripguide from "./tripguide.png";
 import FoodOrder from "./FoodOrder.webp";
+import htmlnew from "./Html.png";
+import cssnew from "./CSS.png";
+import javascriptnew from "./javascript.png";
+import postman from "./Postman.png";
+import react from "./React.png";
+import reduxnew from "./Redux.png";
+import typescriptnew from "./typescript.png";
+import tailwindcss from "./Tailwind_CSS.png";
+import Figma from "./Figma.png";
+import gitnew from "./Git_Logo.png";
+import Mongodb from "./Mongodb.png";
+import nodejsnew from "./nodejs-logo.png";
+import bootstrap from "./bootrap.png";
+import python from "./Python.png";
+import githubnew from "./githubnew.png";
+import netlify from "./Netlify.png";
+import vscode from "./vscode.png";
 
 export {
   logo,
@@ -63,4 +80,21 @@ export {
   tripguide,
   shopCard,
   FoodOrder,
+  htmlnew,
+  cssnew,
+  javascriptnew,
+  postman,
+  react,
+  reduxnew,
+  typescriptnew,
+  tailwindcss,
+  Figma,
+  gitnew,
+  Mongodb,
+  nodejsnew,
+  bootstrap,
+  python,
+  githubnew,
+  netlify,
+  vscode,
 };
