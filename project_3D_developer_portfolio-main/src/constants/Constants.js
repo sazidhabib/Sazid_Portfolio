@@ -165,7 +165,7 @@ export const experiences = [
     img: "https://i.pinimg.com/280x280_RS/90/52/47/905247c7f849068635cfea3b4a5702ef.jpg",
     role: "Junior Unity Developer",
     company: "Imaginary Workstation",
-    date: "Aug 2023 - Oct 2023",
+    date: "Aug 2023 - Oct 2024",
     desc: [
       "Imaginary Work station is a software company that specializesinmixed-realitygames, web development and mobile and desktop application.",
       "Started independently and after sometime joined a team of 5 more colleagues with key roles in company.",
