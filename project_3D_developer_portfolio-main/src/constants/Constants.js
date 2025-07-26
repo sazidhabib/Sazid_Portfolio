@@ -138,10 +138,36 @@ export const skills = [
 export const experiences = [
   {
     id: 0,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdFJmybFp9hgFmci0L4srOF-YYwndid8Rrog&s",
+    role: "Junior Web Developer",
+    company: "Ajker Patrika",
+    date: "Mar 2025 - Present",
+    desc: [
+      `Successfully developed and maintained several in-house projects and implemented customized web pages, including dynamic event pages and additional feature-rich sections, for the Ajker Patrika website. Utilized a diverse technology stack comprising React for building interactive user interfaces, Node.js and Express.js for backend development, MongoDB and MySQL for database management, and Laravel for handling certain server-side functionalities, ensuring seamless integration and optimized performance across the platform.`,
+
+    ],
+    skills: [
+      "ReactJS",
+      "Redux",
+      "NodeJs",
+      "ExpressJS",
+      "Laravel",
+      "MySQL",
+      "Tailwind CSS",
+      "JavaScript",
+      "MongoDB",
+      "Teamwork",
+      "Leadership",
+      "Communication",
+    ],
+    doc: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/Screenshot%20from%202024-01-25%2022-38-31.png?alt=media&token=2785903f-1a4e-41f5-afd2-6adcfe56d058",
+  },
+  {
+    id: 1,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtzxGpr5zWduFJ49PtDaKOQdcbfTqFY7bhGw&s",
     role: "Frontend Developer Intern",
     company: "Brain Station 23",
-    date: "Sep 2024 - Present",
+    date: "Sep 2024 - Feb 2025",
     desc: [
       "Collaborated with a colleague to develop 'PharmaSphere,' a pharmacy-based e-commerce site built using the MERN stack. Focused on implementing secure payment integrations, efficient database structures, and a user-friendly interface.",
       "Developed responsive web platforms, including an e-commerce site with dynamic product displays, user authentication, and cart management, and a movie listing site featuring top-rated movies, API-based data fetching, and a wishlist feature. Leveraged React, TypeScript, Tailwind CSS, REST APIs, Context API and Redux to create user-friendly, intuitive, and responsive experiences focused on seamless navigation and functionality.",
@@ -161,7 +187,7 @@ export const experiences = [
     doc: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/Screenshot%20from%202024-01-25%2022-38-31.png?alt=media&token=2785903f-1a4e-41f5-afd2-6adcfe56d058",
   },
   {
-    id: 1,
+    id: 2,
     img: "https://i.pinimg.com/280x280_RS/90/52/47/905247c7f849068635cfea3b4a5702ef.jpg",
     role: "Junior Unity Developer",
     company: "Imaginary Workstation",
@@ -185,7 +211,7 @@ export const experiences = [
     doc: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/1696514649120.jpeg?alt=media&token=e7f6757b-edfa-4138-a692-d6709eeef3e2",
   },
   {
-    id: 2,
+    id: 3,
     img: "https://green.edu.bd/public//images/clubs/cse-club.png",
     role: "Joint Treasurer",
     company: "Green University of Bangladesh",
