@@ -212,7 +212,7 @@ export const experiences = [
   },
   {
     id: 3,
-    img: "https://green.edu.bd/public//images/clubs/cse-club.png",
+    img: "/planet/cse-club.png",
     role: "Joint Treasurer",
     company: "Green University of Bangladesh",
     date: "June 2020 - jun 2022",
