@@ -204,6 +204,36 @@ const testimonials = [
 
 const projects = [
   {
+    name: "kamrulhasan",
+    description:
+      "A pharmacy-based e-commerce platform offering a seamless shopping experience for medicines and healthcare products. Built using the MERN stack, PharmaSphere features a secure payment system with Stripe, a dynamic admin panel for inventory management, and a user-friendly interface with advanced search and sorting capabilities",
+    tags: [
+      {
+        name: "React",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "JavaScript",
+        color: "green-text-gradient",
+      },
+      {
+        name: "Tailwind",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "MERN",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "e-commerce",
+        color: "pink-text-gradient",
+      },
+    ],
+    image:
+      "https://shafquatulbari.netlify.app/assets/pharmasphere-CIs7kF9-.png",
+    source_code_link: "https://github.com/shafquatulbari/mern-e-commerce",
+  },
+  {
     name: "PharmaSphere",
     description:
       "A pharmacy-based e-commerce platform offering a seamless shopping experience for medicines and healthcare products. Built using the MERN stack, PharmaSphere features a secure payment system with Stripe, a dynamic admin panel for inventory management, and a user-friendly interface with advanced search and sorting capabilities",
