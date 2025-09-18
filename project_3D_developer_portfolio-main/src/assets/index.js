@@ -27,6 +27,8 @@ import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
 
 import snapshop from "./snapshop.webp";
+import pharmasphere from "./pharmasphere.webp";
+import kamrulhasan from "./kamrulHasanWeb.webp";
 import movie from "./movie.webp";
 import shopCard from "./shopCard.webp";
 import tripguide from "./tripguide.png";
@@ -77,6 +79,8 @@ export {
   starbucks,
   tesla,
   snapshop,
+  kamrulhasan,
+  pharmasphere,
   movie,
   tripguide,
   shopCard,

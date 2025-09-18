@@ -26,8 +26,8 @@ const Hero = () => {
                 create something amazing together!
               </p>
               <a
-                href="/Mahabub Sazid Habib_Resume.pdf"
-                download="Mahabub Sazid Habib_Resume.pdf"
+                href="/Mahbub_Sazid_Habib_Resume.pdf"
+                download="Mahbub_Sazid_Habib_Resume.pdf"
               >
                 <button
                   type="button"

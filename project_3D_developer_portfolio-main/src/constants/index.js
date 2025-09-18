@@ -20,6 +20,8 @@ import {
   tesla,
   shopify,
   snapshop,
+  kamrulhasan,
+  pharmasphere,
   movie,
   tripguide,
   threejs,
@@ -229,9 +231,8 @@ const projects = [
         color: "pink-text-gradient",
       },
     ],
-    image:
-      "https://shafquatulbari.netlify.app/assets/pharmasphere-CIs7kF9-.png",
-    source_code_link: "https://github.com/shafquatulbari/mern-e-commerce",
+    image: kamrulhasan,
+    source_code_link: "https://github.com/sazidhabib/React_Js/tree/main/MERN_project",
   },
   {
     name: "PharmaSphere",
@@ -259,8 +260,7 @@ const projects = [
         color: "pink-text-gradient",
       },
     ],
-    image:
-      "https://shafquatulbari.netlify.app/assets/pharmasphere-CIs7kF9-.png",
+    image: pharmasphere,
     source_code_link: "https://github.com/shafquatulbari/mern-e-commerce",
   },
   {
