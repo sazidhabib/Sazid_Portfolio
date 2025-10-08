@@ -208,7 +208,7 @@ const projects = [
   {
     name: "kamrulhasan",
     description:
-      "A pharmacy-based e-commerce platform offering a seamless shopping experience for medicines and healthcare products. Built using the MERN stack, PharmaSphere features a secure payment system with Stripe, a dynamic admin panel for inventory management, and a user-friendly interface with advanced search and sorting capabilities",
+      "This project is a dynamic personal website developed for journalist Kamrul Hasan. It serves as an interactive platform to showcase his writings, reflections, experiences, and published reports, offering readers valuable insights into various topics. The website is primarily in Bengali, targeting Bengali-speaking audiences, and is designed with a focus on readability, user engagement, and content accessibility. From top to bottom, every section of the website is fully dynamic and customizable through its powerful admin panel, allowing seamless management of content, including articles, reports, multimedia, and even the website’s menu structure.",
     tags: [
       {
         name: "React",
