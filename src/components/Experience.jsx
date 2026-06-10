@@ -1,4 +1,3 @@
-import React from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -23,68 +22,65 @@ const ExperienceCard = ({ experience }) => {
         />
       }
       contentStyle={{
-        background: "#1d1836",
+        background: "rgba(17, 17, 34, 0.6)",
         color: "#fff",
-        boxShadow: "rgba(23, 92, 230, 0.15) 0px 4px 24px",
-        backgroundColor: "rgba(17, 25, 40, 0.83)",
-        border: "1px solid rgba(255, 255, 255, 0.125)",
-        borderRadius: "6px",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        border: "1px solid rgba(255, 255, 255, 0.06)",
+        borderRadius: "12px",
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
       }}
       contentArrowStyle={{
         borderRight: "7px solid rgba(255, 255, 255, 0.3)",
       }}
       date={experience?.date}
     >
-      {/* Header Section */}
-      <div className="flex gap-3">
-        <img
-          src={experience?.img}
-          alt={experience?.company}
-          className="h-12 w-12 rounded-md object-cover mt-1 md:h-10"
-        />
-        <div className="flex flex-col">
-          <div className="text-lg font-semibold text-white md:text-sm">
-            {experience?.role}
-          </div>
-          <div className="text-sm font-medium text-gray-400 md:text-xs">
-            {experience?.company}
-          </div>
-          <div className="text-xs font-normal text-gray-500 md:text-[10px]">
-            {experience?.date}
-          </div>
-        </div>
-      </div>
-
-      {/* Description Section */}
-      <div className="mt-4 text-sm text-white md:text-xs">
-        {experience?.desc && (
-          <ul className="mt-5 list-disc ml-5 space-y-2">
-            {experience.desc.map((item, index) => (
-              <li
-                key={`experience-desc-${index}`}
-                className="text-white-100 text-[14px] pl-1 tracking-wider"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {experience?.skills && (
-          <div className="mt-2 flex gap-2">
-            <b className="font-bold text-white text-xs mb-1">Skills:</b>
-            <div className="flex flex-wrap gap-2">
-              {experience.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-800 text-white text-xs px-2 py-1 rounded-md"
-                >
-                  &nbsp;{skill}
-                </span>
-              ))}
+      <div>
+        <div className="flex gap-3">
+          <img
+            src={experience?.img}
+            alt={experience?.company}
+            className="h-10 w-10 rounded-md object-cover mt-1"
+          />
+          <div className="flex flex-col">
+            <div className="text-base font-semibold text-white">
+              {experience?.role}
+            </div>
+            <div className="text-sm font-medium text-slate-400">
+              {experience?.company}
+            </div>
+            <div className="text-xs font-normal text-slate-500">
+              {experience?.date}
             </div>
           </div>
-        )}
+        </div>
+
+        <div className="mt-4 text-sm text-slate-300">
+          {experience?.desc && (
+            <ul className="mt-4 list-disc ml-4 space-y-1.5">
+              {experience.desc.map((item, i) => (
+                <li key={i} className="text-[13px] leading-relaxed pl-1">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {experience?.skills && (
+            <div className="mt-4">
+              <div className="flex flex-wrap gap-1.5">
+                {experience.skills.map((skill, i) => (
+                  <span
+                    key={i}
+                    className="bg-white/5 text-slate-300 text-[11px] px-2 py-1 rounded-md border border-white/5"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </VerticalTimelineElement>
   );
@@ -94,15 +90,13 @@ const Experience = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} text-center`}>
-          What I have done so far
-        </p>
+        <p className={`${styles.sectionSubText} text-center`}>Experience</p>
         <h2 className={`${styles.sectionHeadText} text-center`}>
           Work Experience.
         </h2>
       </motion.div>
 
-      <div className="mt-20 flex flex-col">
+      <div className="mt-16 flex flex-col">
         <VerticalTimeline>
           {experiences.map((experience, index) => (
             <ExperienceCard

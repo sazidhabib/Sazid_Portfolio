@@ -1,47 +1,64 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import {
   About,
   Contact,
   Experience,
-  Feedbacks,
   Hero,
   Navbar,
-  Tech,
   Works,
   StarsCanvas,
+  ErrorBoundary,
 } from "./components";
-import HeroNew from "./components/HeroNew";
 import Skills from "./components/Skills";
 
 import Footer from "./components/Footer";
 import SkillShow from "./components/SkillShow";
+import ProjectDetails from "./components/ProjectDetails";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="relative bg-primary">
-        <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-          <Navbar />
-          <Hero />
-        </div>
+    <ErrorBoundary>
+      <ThemeProvider>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="relative bg-primary">
+                <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
+                  <Navbar />
+                  <Hero />
+                </div>
 
-        <About />
-        <Skills />
-        <Experience />
+                <About />
+                <Skills />
+                <Experience />
 
-        {/* <Tech /> */}
+                {/* <Tech /> */}
 
-        <SkillShow />
-        <div className="relative z-0">
-          <Works />
-          <Contact />
-          <StarsCanvas />
-        </div>
+                <SkillShow />
+                <div className="relative z-0">
+                  <Works />
+                  <Contact />
+                  <StarsCanvas />
+                </div>
 
-        <Footer />
-      </div>
-    </BrowserRouter>
+                <Footer />
+              </div>
+            }
+          />
+          <Route path="/project/:id" element={<ProjectDetails />} />
+        </Routes>
+      </BrowserRouter>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };
 

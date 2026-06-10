@@ -1,6 +1,5 @@
-import React from "react";
-import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
+import Tilt from "react-parallax-tilt";
 
 import { styles } from "../styles";
 import { services } from "../constants";
@@ -8,53 +7,53 @@ import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className="xs:w-[250px] w-full">
-    <motion.div
-      variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
+  <motion.div variants={fadeIn("up", "spring", index * 0.15, 0.75)}>
+    <Tilt
+      tiltMaxAngleX={15}
+      tiltMaxAngleY={15}
+      perspective={900}
+      glareEnable
+      glareMaxOpacity={0.15}
+      glareColor="#ffffff"
+      glarePosition="all"
+      scale={1.03}
+      transitionSpeed={1500}
+      className="green-pink-gradient rounded-2xl p-[2px] shadow-card h-full"
     >
-      <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
-        className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
-      >
+      <div className="bg-white rounded-2xl py-8 px-8 min-h-[150px] md:min-h-[240px] h-full flex flex-col items-center justify-center gap-5">
         <img
           src={icon}
-          alt="web-development"
-          className="w-16 h-16 object-contain"
+          alt={title}
+          className="w-14 h-14 md:w-16 md:h-16 object-contain"
         />
-
-        <h3 className="text-white text-[20px] font-bold text-center">
+        <h3 className="text-white text-[15px] md:text-[18px] font-semibold text-center tracking-tight">
           {title}
         </h3>
       </div>
-    </motion.div>
-  </Tilt>
+    </Tilt>
+  </motion.div>
 );
 
 const About = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Introduction</p>
+        <p className={styles.sectionSubText}>About</p>
         <h2 className={styles.sectionHeadText}>Overview.</h2>
       </motion.div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
+        className="mt-4 text-slate-400 text-[15px] leading-relaxed max-w-3xl"
       >
-        I'm a skilled software developer with experience in TypeScript and
+        I&apos;m a skilled software developer with experience in TypeScript and
         JavaScript, and expertise in frameworks like React, Node.js, and
-        Three.js. I'm a quick learner and collaborate closely with clients to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. Let's work together to bring your ideas to life!
+        Three.js. I&apos;m a quick learner and collaborate closely with clients
+        to create efficient, scalable, and user-friendly solutions that solve
+        real-world problems.
       </motion.p>
 
-      <div className="mt-20 flex flex-wrap gap-10">
+      <div className="mt-16 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

@@ -1,39 +1,38 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
-import { styles } from "../styles";
 import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
+import { menu, close } from "../assets";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  const { theme, toggleTheme } = useTheme();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 50);
+  });
 
   return (
-    <nav
-      className={`${
-        styles.paddingX
-      } w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-primary" : "bg-transparent"
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`w-full flex justify-center fixed top-0 z-50 transition-all duration-500 px-4 sm:px-8 ${
+        scrolled ? "py-4 sm:py-6" : "py-6 sm:py-8"
       }`}
     >
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+      <div
+        className={`w-full flex justify-between items-center max-w-7xl mx-auto transition-all duration-500 ${
+          scrolled
+            ? "py-3 px-6 sm:px-8 rounded-full glass shadow-lg"
+            : "py-3 px-4 sm:px-8 bg-transparent"
+        }`}
+      >
         <Link
           to="/"
           className="flex items-center gap-2"
@@ -42,23 +41,47 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <p className="text-white text-[18px] font-bold cursor-pointer flex ">
-            Sazid&nbsp;Habib
-          </p>
+          <span
+            className={`text-white font-bold cursor-pointer tracking-tight transition-all duration-500 ${
+              scrolled ? "text-base" : "text-2xl"
+            }`}
+          >
+            Sazid<span className="text-accent">.</span>Habib
+          </span>
         </Link>
 
-        <ul className="list-none items-center hidden md:flex flex-row gap-10">
+        <ul className="list-none items-center hidden md:flex flex-row gap-6">
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className={`${
-                active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
+              className={`transition-all duration-500 ease-in-out ${
+                scrolled ? "text-[13px]" : "text-lg"
+              } ${
+                active === nav.title ? "text-white" : "text-slate-400"
+              } hover:text-white font-medium cursor-pointer`}
               onClick={() => setActive(nav.title)}
             >
-              <a href={`#${nav.id}`}>{nav.title}</a>
+              <a href={`#${nav.id}`} className="inline-block">
+                {nav.title}
+              </a>
             </li>
           ))}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="text-slate-400 hover:text-white transition-colors p-1.5"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
           <a
             href="https://github.com/sazidhabib"
             target="_blank"
@@ -66,9 +89,9 @@ const Navbar = () => {
           >
             <button
               type="button"
-              className=" focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+              className="text-white bg-accent/10 hover:bg-accent/20 border border-accent/20 focus:ring-0 font-medium rounded-lg text-sm px-4 py-1.5 transition-all duration-300"
             >
-              GitHub Profile
+              GitHub
             </button>
           </a>
         </ul>
@@ -77,21 +100,21 @@ const Navbar = () => {
           <img
             src={toggle ? close : menu}
             alt="menu"
-            className="w-[28px] h-[28px] object-contain"
+            className="w-[24px] h-[24px] object-contain cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
             onClick={() => setToggle(!toggle)}
           />
 
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+            } p-6 glass absolute top-16 right-0 mx-4 my-2 min-w-[160px] z-10 rounded-xl`}
           >
             <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
               {navLinks.map((nav) => (
                 <li
                   key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-white" : "text-secondary"
+                  className={`font-medium cursor-pointer text-[15px] ${
+                    active === nav.title ? "text-white" : "text-slate-400"
                   }`}
                   onClick={() => {
                     setToggle(!toggle);
@@ -105,7 +128,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

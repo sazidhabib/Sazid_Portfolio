@@ -1,73 +1,121 @@
 import { motion } from "framer-motion";
-import { leftContentAnimation } from "../utils/motion";
-import { styles } from "../styles";
-import { headContentAnimation } from "../utils/motion";
 
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen mx-auto flex items-center flex-wrap justify-center">
-      {/* Content Container */}
-      <div className="flex flex-col px-6 items-center lg:flex-row gap-10 max-w-7xl my-auto mx-auto">
-        {/* Bio Section */}
-        <motion.div {...leftContentAnimation}>
-          <div className="max-w-md mx-auto mt-10">
-            {/* <div className="flex flex-col justify-center items-center">
-            <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
-            <div className="w-1 sm:h-80 h-40 violet-gradient" />
-          </div> */}
-            <div>
-              <h1 className={`${styles.heroHeadText} text-white`}>
-                Hi, I'm{" "}
-                <span className="text-[#915EFF]">Mahabub Sazid Habib</span>
-              </h1>
-              <p className={`${styles.heroSubText} mt-2 text-secondary`}>
-                Crafting responsive, user-friendly web applications with modern
-                tools. Passionate about building impactful projects. Let's
-                create something amazing together!
-              </p>
+    <section className="relative w-full min-h-[100dvh] mx-auto flex items-center">
+      <div className="flex flex-col px-6 items-center lg:flex-row gap-12 max-w-7xl w-full mx-auto pt-24">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1"
+        >
+          <div className="max-w-xl">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-accent text-[13px] font-mono tracking-[0.25em] uppercase"
+            >
+              Full-Stack Developer
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.3,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="text-white font-bold text-[clamp(32px,5vw,56px)] leading-[1.15] tracking-tight mt-4"
+            >
+              Hi, I&apos;m{" "}
+              <span className="inline-block text-transparent italic bg-clip-text bg-gradient-to-r from-accent to-accent-dark pr-3 box-decoration-clone">
+                Mahbub Sazid Habib
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.4,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="text-slate-400 text-[15px] sm:text-[16px] leading-relaxed mt-4 max-w-[520px]"
+            >
+              Crafting responsive, user-friendly web applications with modern
+              tools. Passionate about building impactful projects.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.5,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="flex gap-4 mt-8"
+            >
               <a
                 href="/Mahbub_Sazid_Habib_Resume.pdf"
                 download="Mahbub_Sazid_Habib_Resume.pdf"
               >
                 <button
                   type="button"
-                  className="mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-lg px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                  className="text-white bg-accent hover:bg-accent-dark px-6 py-3 rounded-lg font-medium text-sm transition-all duration-300 active:scale-[0.97]"
                 >
-                  Resume
+                  Download Resume
                 </button>
               </a>
-            </div>
+              <a href="#about">
+                <button
+                  type="button"
+                  className="text-slate-300 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 rounded-lg font-medium text-sm transition-all duration-300 active:scale-[0.97]"
+                >
+                  Learn More
+                </button>
+              </a>
+            </motion.div>
           </div>
         </motion.div>
 
-        {/* Image Section */}
         <motion.div
-          {...headContentAnimation}
-          className="xl:h-full md:h-[550px] h-[350px] flex items-center justify-center overflow-hidden relative"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1 flex items-center justify-center"
         >
-          {/* <img src="planet/chareacter.png" alt="" /> */}
-          <div className="home__img bg-center bg-cover aspect-w-1 aspect-h-1"></div>
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-b from-accent/10 to-transparent rounded-full blur-3xl" />
+            <div className="home__img rounded-2xl border border-white/10 shadow-glass" />
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute xs:bottom-10 md:bottom-1 lg:bottom-10 bottom-32 w-full flex justify-center items-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-8 w-full flex justify-center items-center"
+      >
         <a href="#about">
-          <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
+          <div className="w-[30px] h-[52px] rounded-full border border-white flex justify-center items-start p-2 hover:border-white/20 transition-colors">
             <motion.div
-              animate={{
-                y: [0, 24, 0],
-              }}
+              animate={{ y: [0, 12, 0] }}
               transition={{
-                duration: 1.5,
+                duration: 2.5,
                 repeat: Infinity,
-                repeatType: "loop",
+                ease: [0.16, 1, 0.3, 1],
               }}
-              className="w-3 h-3 rounded-full bg-secondary mb-1"
+              className="w-2 h-2 rounded-full bg-slate-400"
             />
           </div>
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 };

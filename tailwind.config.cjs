@@ -5,25 +5,43 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#050816",
-        secondary: "#aaa6c3",
-        tertiary: "#151030",
-        "black-100": "#100d25",
-        "black-200": "#090325",
-        "white-100": "#f3f3f3",
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
+        secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+        tertiary: "rgb(var(--color-tertiary) / <alpha-value>)",
+        "black-100": "rgb(var(--color-black-100) / <alpha-value>)",
+        "black-200": "rgb(var(--color-black-200) / <alpha-value>)",
+        "white-100": "rgb(var(--color-white-100) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
+        "accent-dark": "rgb(var(--color-accent-dark) / <alpha-value>)",
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
+        "surface-light": "rgb(var(--color-surface-light) / <alpha-value>)",
       },
       boxShadow: {
-        card: "0px 35px 120px -15px #211e35",
+        card: "var(--shadow-card)",
+        glow: "0 0 30px rgba(79,172,254,0.12)",
+        glass: "var(--shadow-glass)",
       },
       screens: {
         xs: "450px",
       },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+        display: ["Inter", "system-ui", "sans-serif"],
+      },
       backgroundImage: {
-        "hero-pattern": "url('/src/assets/herobg.png')",
+        "hero-pattern": "linear-gradient(to bottom, transparent 50%, rgb(var(--color-primary) / 1) 100%), url('/src/assets/herobg.png')",
+        "grid-pattern":
+          "linear-gradient(rgba(79,172,254,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(79,172,254,0.03) 1px, transparent 1px)",
+      },
+      backgroundSize: {
+        grid: "60px 60px",
       },
       animation: {
         scroll: "scroll 30s linear infinite",
         "scroll-reverse": "scroll-reverse 30s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        shimmer: "shimmer 3s ease-in-out infinite",
       },
       keyframes: {
         scroll: {
@@ -33,6 +51,14 @@ module.exports = {
         "scroll-reverse": {
           from: { transform: "translateX(-100%)" },
           to: { transform: "translateX(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
     },

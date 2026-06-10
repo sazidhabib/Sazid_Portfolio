@@ -19,8 +19,8 @@ export const textVariant = (delay) => {
 export const fadeIn = (direction, type, delay, duration) => {
   return {
     hidden: {
-      x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
-      y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+      x: direction === "left" ? 50 : direction === "right" ? -50 : 0,
+      y: direction === "up" ? 50 : direction === "down" ? -50 : 0,
       opacity: 0,
     },
     show: {
@@ -88,37 +88,37 @@ export const staggerContainer = (staggerChildren, delayChildren) => {
 };
 
 export const headContentAnimation = {
-  initial: { y: 100, opacity: 0 },
+  initial: { y: 50, opacity: 0 },
   animate: { y: 0, opacity: 1 },
   transition: {
     type: "spring",
-    damping: 7,
-    stiffness: 30,
+    damping: 12,
+    stiffness: 50,
     restDelta: 0.001,
-    duration: 0.6,
+    duration: 0.4,
   },
 };
 export const downContentAnimation = {
-  initial: { y: -100, opacity: 0 },
+  initial: { y: -50, opacity: 0 },
   animate: { y: 0, opacity: 1 },
   transition: {
     type: "spring",
-    damping: 7,
-    stiffness: 30,
+    damping: 12,
+    stiffness: 50,
     restDelta: 0.001,
-    duration: 0.6,
+    duration: 0.4,
     delay: 0.2,
     delayChildren: 0.2,
   },
 };
 export const leftContentAnimation = {
-  initial: { x: 100, opacity: 0 },
+  initial: { x: 50, opacity: 0 },
   animate: { x: 0, opacity: 1 },
   transition: {
     type: "spring",
-    damping: 7,
-    stiffness: 30,
+    damping: 12,
+    stiffness: 50,
     restDelta: 0.001,
-    duration: 0.6,
+    duration: 0.4,
   },
 };

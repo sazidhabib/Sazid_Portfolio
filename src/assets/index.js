@@ -31,7 +31,6 @@ import pharmasphere from "./pharmasphere.webp";
 import kamrulhasan from "./kamrulHasanWeb.webp";
 import movie from "./movie.webp";
 import shopCard from "./shopCard.webp";
-import tripguide from "./tripguide.png";
 import FoodOrder from "./FoodOrder.webp";
 import htmlnew from "./Html.png";
 import cssnew from "./CSS.png";
@@ -51,6 +50,14 @@ import githubnew from "./githubnew.png";
 import netlify from "./Netlify.png";
 import vscode from "./vscode.png";
 import router from "./router.webp";
+import kamrulfullpage from "./kamrulhasan_fullpage.webp";
+import kamrulvideo from "./kamrulhasan.mp4";
+import nextidea from "./nextidea.webp";
+
+import nextideafullpage from "./nextideafullpage.webp";
+import pathokbonddhu from "./pathakbondhu.webp";
+
+import pathokbonddhufullpage from "./pathokbonddhufullpage.webp";
 
 export {
   logo,
@@ -82,7 +89,6 @@ export {
   kamrulhasan,
   pharmasphere,
   movie,
-  tripguide,
   shopCard,
   FoodOrder,
   htmlnew,
@@ -103,4 +109,10 @@ export {
   netlify,
   vscode,
   router,
+  kamrulfullpage,
+  kamrulvideo,
+  nextidea,
+  nextideafullpage,
+  pathokbonddhu,
+  pathokbonddhufullpage,
 };
