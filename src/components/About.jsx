@@ -20,7 +20,7 @@ const ServiceCard = ({ index, title, icon }) => (
       transitionSpeed={1500}
       className="green-pink-gradient rounded-2xl p-[2px] shadow-card h-full"
     >
-      <div className="bg-white rounded-2xl py-8 px-8 min-h-[150px] md:min-h-[240px] h-full flex flex-col items-center justify-center gap-5">
+      <div className="bg-surface rounded-2xl py-8 px-8 min-h-[150px] md:min-h-[240px] h-full flex flex-col items-center justify-center gap-5">
         <img
           src={icon}
           alt={title}
