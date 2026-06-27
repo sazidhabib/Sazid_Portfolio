@@ -43,15 +43,16 @@ const Contact = () => {
         return;
       }
 
-      const formAction = 'https://formsubmit.co/mahabubsazid88@gmail.com';
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('email', form.email);
-      formData.append('message', form.message);
-
-      const response = await fetch(formAction, {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
       });
 
       if (response.ok) {

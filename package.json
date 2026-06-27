@@ -11,12 +11,14 @@
     "lint:fix": "eslint src --ext .js,.jsx --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
+    "@prisma/client": "^5.21.0",
     "@react-three/drei": "^9.56.24",
     "@react-three/fiber": "^8.11.1",
     "framer-motion": "^9.0.7",
@@ -47,6 +49,7 @@
     "postcss-import": "^16.1.1",
     "postcss-nested": "^7.0.2",
     "postcss-nesting": "^14.0.0",
+    "prisma": "^5.21.0",
     "tailwindcss": "^3.2.6",
     "vite": "^4.1.0",
     "vitest": "^0.34.6"
