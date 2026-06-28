@@ -9,7 +9,7 @@ import "react-vertical-timeline-component/style.min.css";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
-import { experiences } from "../constants/Constants";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -87,6 +87,8 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
+  const { experiences } = usePortfolioData();
+
   return (
     <>
       <motion.div variants={textVariant()}>

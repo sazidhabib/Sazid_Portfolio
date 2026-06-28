@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../constants";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const ProjectCard = ({
@@ -113,6 +113,8 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const { projects } = usePortfolioData();
+
   return (
     <>
       <motion.div variants={textVariant()}>

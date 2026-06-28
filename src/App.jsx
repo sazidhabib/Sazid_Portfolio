@@ -15,6 +15,7 @@ import Skills from "./components/Skills";
 import Footer from "./components/Footer";
 import SkillShow from "./components/SkillShow";
 import ProjectDetails from "./components/ProjectDetails";
+import AdminPanel from "./components/admin/AdminPanel";
 import { ThemeProvider } from "./context/ThemeContext";
 
 const App = () => {
@@ -55,6 +56,7 @@ const App = () => {
             }
           />
           <Route path="/project/:id" element={<ProjectDetails />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
       </ThemeProvider>

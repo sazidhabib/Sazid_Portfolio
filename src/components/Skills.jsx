@@ -3,7 +3,7 @@ import Tilt from "react-parallax-tilt";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import { skills } from "../constants/Constants";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 const SkillCard = ({ skill, index }) => {
   return (
@@ -49,6 +49,8 @@ const SkillCard = ({ skill, index }) => {
 };
 
 const Skills = () => {
+  const { skills } = usePortfolioData();
+
   return (
     <>
       <motion.div variants={textVariant()}>

@@ -12,5 +12,51 @@ model ContactMessage {
   name      String
   email     String
   message   String
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model Skill {
+  id        String   @id @default(uuid())
+  category  String
+  name      String
+  image     String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  role        String
+  company     String
+  companyLogo String   @default("")
+  date        String
+  description String[]
+  skills      String[]
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id             String   @id @default(uuid())
+  name           String
+  description    String
+  image          String   @default("")
+  tags           Json     @default("[]")
+  features       String[]
+  sourceCodeLink String   @default("")
+  liveLink       String   @default("")
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  name      String
+  data      String
+  createdAt DateTime @default(now())
+}
+

@@ -21,12 +21,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { styles } from "../styles";
-import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { projects } = usePortfolioData();
 
   const project = projects.find((p) => p.id === id);
 
