@@ -1,4 +1,4 @@
-import prisma from '../_db.js';
+import prisma, { cleanImageUrl } from '../_db.js';
 import { checkAuth } from '../_auth.js';
 
 export default async function handler(req, res) {
@@ -23,7 +23,11 @@ export default async function handler(req, res) {
           { sortOrder: 'asc' }
         ]
       });
-      return res.status(200).json(skills);
+      const sanitizedSkills = skills.map(skill => ({
+        ...skill,
+        image: cleanImageUrl(skill.image)
+      }));
+      return res.status(200).json(sanitizedSkills);
     }
 
     // Write operations require auth

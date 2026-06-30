@@ -12,3 +12,16 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default prisma;
+
+export function cleanImageUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('http://localhost:') || url.startsWith('http://127.0.0.1:')) {
+    try {
+      const parsed = new URL(url);
+      return parsed.pathname + parsed.search;
+    } catch (e) {
+      return url;
+    }
+  }
+  return url;
+}

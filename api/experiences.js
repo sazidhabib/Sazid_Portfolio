@@ -1,4 +1,4 @@
-import prisma from './_db.js';
+import prisma, { cleanImageUrl } from './_db.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       id: exp.id,
       role: exp.role,
       company: exp.company,
-      img: exp.companyLogo,
+      img: cleanImageUrl(exp.companyLogo),
       date: exp.date,
       desc: exp.description,
       skills: exp.skills

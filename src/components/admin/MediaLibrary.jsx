@@ -129,12 +129,13 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
 
   const handleCopyLink = (e, url) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(url);
+    const absoluteUrl = `${window.location.origin}${url}`;
+    navigator.clipboard.writeText(absoluteUrl);
     setCopySuccess(url);
     setTimeout(() => setCopySuccess(''), 2000);
   };
 
-  const getMediaUrl = (id) => `${window.location.origin}/api/media?id=${id}`;
+  const getMediaUrl = (id) => `/api/media?id=${id}`;
 
   return (
     <div className="flex flex-col gap-6 w-full">

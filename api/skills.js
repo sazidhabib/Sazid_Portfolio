@@ -1,4 +1,4 @@
-import prisma from './_db.js';
+import prisma, { cleanImageUrl } from './_db.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
       categoriesMap[skill.category].push({
         id: skill.id,
         name: skill.name,
-        image: skill.image,
+        image: cleanImageUrl(skill.image),
       });
     });
 

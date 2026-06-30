@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { id } = req.query;
+    const id = req.query?.id || new URL(req.url, `http://${req.headers.host || 'localhost'}`).searchParams.get('id');
     if (!id) {
       return res.status(400).json({ error: 'Missing query param: id' });
     }
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     // Serve binary WebP image with cache headers for high performance
     res.setHeader('Content-Type', 'image/webp');
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year cache
-    return res.send(imageBuffer);
+    return res.end(imageBuffer);
   } catch (error) {
     console.error('Public media serving error:', error);
     return res.status(500).json({ error: 'Internal Server Error', details: error.message });

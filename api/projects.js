@@ -1,4 +1,4 @@
-import prisma from './_db.js';
+import prisma, { cleanImageUrl } from './_db.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -32,17 +32,19 @@ export default async function handler(req, res) {
         tagsObj = proj.tags || [];
       }
 
+      const cleanedImg = cleanImageUrl(proj.image);
+
       return {
         id: proj.id,
         name: proj.name,
         description: proj.description,
-        image: proj.image,
+        image: cleanedImg,
         tags: tagsObj,
         features: proj.features,
         source_code_link: proj.sourceCodeLink,
         live_link: proj.liveLink,
         media: [
-          { type: 'image', src: proj.image }
+          { type: 'image', src: cleanedImg }
         ]
       };
     });

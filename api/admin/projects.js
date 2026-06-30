@@ -1,4 +1,4 @@
-import prisma from '../_db.js';
+import prisma, { cleanImageUrl } from '../_db.js';
 import { checkAuth } from '../_auth.js';
 
 export default async function handler(req, res) {
@@ -20,7 +20,11 @@ export default async function handler(req, res) {
       const projects = await prisma.project.findMany({
         orderBy: { sortOrder: 'asc' }
       });
-      return res.status(200).json(projects);
+      const sanitizedProjects = projects.map(proj => ({
+        ...proj,
+        image: cleanImageUrl(proj.image)
+      }));
+      return res.status(200).json(sanitizedProjects);
     }
 
     // Write operations require auth

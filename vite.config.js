@@ -16,6 +16,14 @@ function vercelApiPlugin() {
           return next()
         }
 
+        // Parse query parameters
+        const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost'}`)
+        const query = {}
+        for (const [key, value] of urlObj.searchParams.entries()) {
+          query[key] = value
+        }
+        req.query = query
+
         // Extract the route name (e.g., /api/contact -> contact)
         const routeName = req.url.replace('/api/', '').split('?')[0]
         const handlerPath = path.join(__dirname, 'api', `${routeName}.js`)
@@ -51,6 +59,16 @@ function vercelApiPlugin() {
           res.json = (data) => {
             res.setHeader('Content-Type', 'application/json')
             originalEnd(JSON.stringify(data))
+          }
+          res.send = (body) => {
+            if (Buffer.isBuffer(body)) {
+              originalEnd(body)
+            } else if (typeof body === 'object' && body !== null) {
+              res.setHeader('Content-Type', 'application/json')
+              originalEnd(JSON.stringify(body))
+            } else {
+              originalEnd(body)
+            }
           }
 
           await handler(req, res)
