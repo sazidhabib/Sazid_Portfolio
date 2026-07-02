@@ -4,6 +4,7 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
   const [mediaList, setMediaList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null);
   const [error, setError] = useState('');
   const [copySuccess, setCopySuccess] = useState('');
 
@@ -68,44 +69,60 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
   };
 
   const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
     setUploading(true);
     setError('');
+    
+    let successCount = 0;
+    let failMessages = [];
 
-    try {
-      // 1. Process image to WebP (client-side)
-      const webpBase64 = await processToWebP(file);
-      
-      // 2. Extract clean name (without extension) and append .webp
-      const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-      const webpFileName = `${cleanName.replace(/\s+/g, '_').toLowerCase()}.webp`;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setUploadProgress({ current: i + 1, total: files.length });
 
-      // 3. Post to API
-      const res = await fetch('/api/admin/media', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          name: webpFileName,
-          data: webpBase64
-        })
-      });
+      try {
+        // 1. Process image to WebP (client-side)
+        const webpBase64 = await processToWebP(file);
+        
+        // 2. Extract clean name (without extension) and append .webp
+        const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+        const webpFileName = `${cleanName.replace(/\s+/g, '_').toLowerCase()}.webp`;
 
-      if (res.ok) {
-        fetchMedia();
-      } else {
-        const data = await res.json();
-        setError(data.error || 'Upload failed');
+        // 3. Post to API
+        const res = await fetch('/api/admin/media', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: webpFileName,
+            data: webpBase64
+          })
+        });
+
+        if (res.ok) {
+          successCount++;
+        } else {
+          const data = await res.json();
+          failMessages.push(`${file.name}: ${data.error || 'Upload failed'}`);
+        }
+      } catch (err) {
+        failMessages.push(`${file.name}: ${err.message}`);
       }
-    } catch (err) {
-      setError(`Processing error: ${err.message}`);
-    } finally {
-      setUploading(false);
     }
+
+    setUploadProgress(null);
+    setUploading(false);
+
+    if (failMessages.length > 0) {
+      setError(`Uploaded ${successCount} file(s). Failed: ${failMessages.join(', ')}`);
+    }
+
+    // Refresh media library list
+    fetchMedia();
   };
 
   const handleDelete = async (e, id) => {
@@ -157,13 +174,18 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
-          {uploading ? 'Processing Image...' : 'Upload Image'}
+          {uploading
+            ? uploadProgress
+              ? `Uploading ${uploadProgress.current}/${uploadProgress.total}...`
+              : 'Processing...'
+            : 'Upload Images'}
           <input
             type="file"
             accept="image/*"
             onChange={handleFileUpload}
             className="hidden"
             disabled={uploading}
+            multiple
           />
         </label>
       </div>
