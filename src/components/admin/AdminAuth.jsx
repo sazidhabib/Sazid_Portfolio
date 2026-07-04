@@ -38,7 +38,7 @@ const AdminAuth = ({ onSuccess }) => {
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] rounded-full bg-accent/5 blur-[80px]" />
       <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-accent-dark/5 blur-[80px]" />
 
-      <div className="w-full max-w-md glass-card rounded-2xl p-8 relative z-10 animate-float">
+      <div className="w-full max-w-md glass-card rounded-2xl p-8 relative z-10">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-extrabold text-white tracking-tight">
             Sazid<span className="text-accent">.</span>Habib

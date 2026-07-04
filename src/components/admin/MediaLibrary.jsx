@@ -83,12 +83,29 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
       setUploadProgress({ current: i + 1, total: files.length });
 
       try {
-        // 1. Process image to WebP (client-side)
-        const webpBase64 = await processToWebP(file);
-        
-        // 2. Extract clean name (without extension) and append .webp
-        const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-        const webpFileName = `${cleanName.replace(/\s+/g, '_').toLowerCase()}.webp`;
+        let finalData;
+        let finalFileName;
+
+        if (file.type.startsWith('video/')) {
+          const reader = new FileReader();
+          const base64Promise = new Promise((resolve, reject) => {
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+          });
+          finalData = await base64Promise;
+          
+          const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+          const ext = file.name.split('.').pop();
+          finalFileName = `${cleanName.replace(/\s+/g, '_').toLowerCase()}.${ext}`;
+        } else {
+          // 1. Process image to WebP (client-side)
+          finalData = await processToWebP(file);
+          
+          // 2. Extract clean name (without extension) and append .webp
+          const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+          finalFileName = `${cleanName.replace(/\s+/g, '_').toLowerCase()}.webp`;
+        }
 
         // 3. Post to API
         const res = await fetch('/api/admin/media', {
@@ -98,8 +115,8 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-            name: webpFileName,
-            data: webpBase64
+            name: finalFileName,
+            data: finalData
           })
         });
 
@@ -152,7 +169,7 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
     setTimeout(() => setCopySuccess(''), 2000);
   };
 
-  const getMediaUrl = (id) => `/api/media?id=${id}`;
+  const getMediaUrl = (media) => `/api/media?id=${media.id}&name=${encodeURIComponent(media.name)}`;
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -167,7 +184,7 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between glass-card p-6 rounded-xl border border-white/5">
         <div className="flex flex-col gap-1 text-center sm:text-left">
           <span className="text-white font-semibold text-sm">Upload New Asset</span>
-          <span className="text-slate-500 text-xs">Supports PNG, JPG, JPEG, WEBP. Converted to WEBP at 85% quality.</span>
+          <span className="text-slate-500 text-xs">Images are converted to WEBP. Videos are uploaded directly.</span>
         </div>
 
         <label className={`py-2.5 px-5 bg-accent hover:bg-accent-dark text-white rounded-lg text-sm font-semibold cursor-pointer transition-all flex items-center gap-2 active:scale-[0.97] ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -181,7 +198,7 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
             : 'Upload Images'}
           <input
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             onChange={handleFileUpload}
             className="hidden"
             disabled={uploading}
@@ -206,7 +223,7 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {mediaList.map((media) => {
-            const url = getMediaUrl(media.id);
+            const url = getMediaUrl(media);
             const isCopied = copySuccess === url;
 
             return (
@@ -219,14 +236,39 @@ const MediaLibrary = ({ token, isSelectMode = false, onSelect = null }) => {
                     : 'border-white/5 hover:border-white/10'
                 }`}
               >
-                {/* Image Box */}
-                <div className="w-full aspect-square bg-slate-900/50 rounded-lg overflow-hidden flex items-center justify-center relative">
-                  <img
-                    src={url}
-                    alt={media.name}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
+                {/* Image/Video Box */}
+                <div className="w-full aspect-square bg-slate-900/50 rounded-lg overflow-hidden flex items-center justify-center relative group-hover:bg-slate-800/50 transition-colors">
+                  {media.name.match(/\.(mp4|webm|ogg)$/i) ? (
+                    <video
+                      src={url}
+                      className="w-full h-full object-cover"
+                      preload="metadata"
+                      muted
+                      loop
+                      onMouseEnter={(e) => e.target.play()}
+                      onMouseLeave={(e) => {
+                        e.target.pause();
+                        e.target.currentTime = 0;
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={url}
+                      alt={media.name}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
+                  )}
+                  
+                  {media.name.match(/\.(mp4|webm|ogg)$/i) && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="bg-black/50 p-2 rounded-full opacity-70 group-hover:opacity-0 transition-opacity">
+                        <svg className="w-6 h-6 text-white pl-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Delete button (non-select mode or hover) */}
                   <button

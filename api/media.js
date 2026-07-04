@@ -28,14 +28,17 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Media not found' });
     }
 
-    // data format: "data:image/webp;base64,UklGRqYAAABXRUJQVlA..."
-    const base64Data = media.data.split(',')[1];
-    const imageBuffer = Buffer.from(base64Data, 'base64');
+    // data format: "data:image/webp;base64,UklGRqYAAABXRUJQVlA..." or "data:video/mp4;base64,..."
+    const dataParts = media.data.split(',');
+    const mimeType = dataParts[0].match(/data:(.*?);/)?.[1] || 'application/octet-stream';
+    const base64Data = dataParts[1];
+    
+    const mediaBuffer = Buffer.from(base64Data, 'base64');
 
-    // Serve binary WebP image with cache headers for high performance
-    res.setHeader('Content-Type', 'image/webp');
+    // Serve binary media with cache headers for high performance
+    res.setHeader('Content-Type', mimeType);
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year cache
-    return res.end(imageBuffer);
+    return res.end(mediaBuffer);
   } catch (error) {
     console.error('Public media serving error:', error);
     return res.status(500).json({ error: 'Internal Server Error', details: error.message });

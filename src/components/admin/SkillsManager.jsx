@@ -202,7 +202,7 @@ const SkillsManager = ({ token }) => {
       {/* Add/Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary/80 backdrop-blur-md px-4">
-          <div className="w-full max-w-lg glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass animate-float">
+          <div className="w-full max-w-lg glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"

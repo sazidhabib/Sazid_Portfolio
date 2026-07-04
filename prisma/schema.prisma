@@ -44,6 +44,7 @@ model Project {
   name           String
   description    String
   image          String   @default("")
+  media          Json     @default("[]")
   tags           Json     @default("[]")
   features       String[]
   sourceCodeLink String   @default("")

@@ -32,7 +32,17 @@ export default async function handler(req, res) {
         tagsObj = proj.tags || [];
       }
 
+      let mediaObj = [];
+      try {
+        mediaObj = typeof proj.media === 'string' ? JSON.parse(proj.media) : proj.media;
+      } catch (e) {
+        mediaObj = proj.media || [];
+      }
+
       const cleanedImg = cleanImageUrl(proj.image);
+      if (mediaObj.length === 0 && cleanedImg) {
+        mediaObj = [{ type: 'image', src: cleanedImg }];
+      }
 
       return {
         id: proj.id,
@@ -43,9 +53,7 @@ export default async function handler(req, res) {
         features: proj.features,
         source_code_link: proj.sourceCodeLink,
         live_link: proj.liveLink,
-        media: [
-          { type: 'image', src: cleanedImg }
-        ]
+        media: mediaObj
       };
     });
 

@@ -30,6 +30,14 @@ const ProjectCard = ({
     navigate(`/project/${id}`);
   };
 
+  const stripHtml = (html) => {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+
+  const cleanDescription = stripHtml(description);
+
   return (
     <motion.div
       variants={fadeIn("up", "spring", index * 0.1, 0.75)}
@@ -50,11 +58,22 @@ const ProjectCard = ({
       >
         <div className="bg-tertiary/50 rounded-xl p-4 h-full flex flex-col">
           <div className="relative w-full h-[120px] md:h-[200px] rounded-lg overflow-hidden">
-            <img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-            />
+            {image && image.match(/\.(mp4|webm|ogg)$/i) ? (
+              <video
+                src={image}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                src={image}
+                alt={name}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            )}
 
             <div className="absolute inset-0 flex justify-end m-2">
               <div
@@ -79,9 +98,9 @@ const ProjectCard = ({
             </h3>
             <p className="mt-2 text-slate-400 text-[13px] leading-relaxed flex-1">
               <span className="hidden md:inline">
-                {truncateText(description, 30)}
+                {truncateText(cleanDescription, 30)}
               </span>
-              <span className="md:hidden">{truncateText(description, 10)}</span>
+              <span className="md:hidden">{truncateText(cleanDescription, 10)}</span>
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2">

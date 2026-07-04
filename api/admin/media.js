@@ -1,6 +1,14 @@
 import prisma from '../_db.js';
 import { checkAuth } from '../_auth.js';
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
+};
+
 export default async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -37,9 +45,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Missing required fields: name, data' });
       }
 
-      // Check if data is indeed a base64 image data URI
-      if (!data.startsWith('data:image/')) {
-        return res.status(400).json({ error: 'Invalid data format. Expected base64 data URI.' });
+      // Check if data is indeed a base64 image or video data URI
+      if (!data.startsWith('data:image/') && !data.startsWith('data:video/')) {
+        return res.status(400).json({ error: 'Invalid data format. Expected base64 image or video data URI.' });
       }
 
       const newMedia = await prisma.media.create({

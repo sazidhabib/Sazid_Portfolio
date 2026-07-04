@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     if (!checkAuth(req, res)) return;
 
     if (req.method === 'POST') {
-      const { name, description, image, tags, features, sourceCodeLink, liveLink, sortOrder } = req.body;
+      const { name, description, image, media, tags, features, sourceCodeLink, liveLink, sortOrder } = req.body;
       if (!name || !description || !tags || !features) {
         return res.status(400).json({ error: 'Missing required fields: name, description, tags, features' });
       }
@@ -41,6 +41,7 @@ export default async function handler(req, res) {
           name,
           description,
           image: image || '',
+          media: media || [],
           tags: typeof tags === 'string' ? JSON.parse(tags) : tags,
           features: Array.isArray(features) ? features : [features],
           sourceCodeLink: sourceCodeLink || '',
@@ -52,7 +53,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PUT') {
-      const { id, name, description, image, tags, features, sourceCodeLink, liveLink, sortOrder } = req.body;
+      const { id, name, description, image, media, tags, features, sourceCodeLink, liveLink, sortOrder } = req.body;
       if (!id || !name || !description || !tags || !features) {
         return res.status(400).json({ error: 'Missing required fields: id, name, description, tags, features' });
       }
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
           name,
           description,
           image: image || '',
+          media: media || [],
           tags: typeof tags === 'string' ? JSON.parse(tags) : tags,
           features: Array.isArray(features) ? features : [features],
           sourceCodeLink: sourceCodeLink || '',

@@ -27,35 +27,13 @@ import { usePortfolioData } from "../hooks/usePortfolioData";
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { projects } = usePortfolioData();
+  const { projects, loading } = usePortfolioData();
 
   const project = projects.find((p) => p.id === id);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-
-  useEffect(() => {
-    if (!project) {
-      const timer = setTimeout(() => navigate("/", { replace: true }), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [project, navigate]);
-
-  if (!project) {
-    return (
-      <div className="bg-primary min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Project Not Found
-          </h1>
-          <p className="text-slate-400">Redirecting to homepage...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const media = project.media || [{ type: "image", src: project.image }];
+  const fallbackMediaType = project?.image?.match(/\.(mp4|webm|ogg)$/i) ? "video" : "image";
+  const media = (project?.media && project.media.length > 0) 
+    ? project.media 
+    : (project?.image ? [{ type: fallbackMediaType, src: project.image }] : []);
   const hasMultiple = media.length > 1;
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -69,12 +47,23 @@ const ProjectDetails = () => {
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
 
   const goNext = useCallback(() => {
-    setLightboxIndex((prev) => (prev + 1) % media.length);
+    setLightboxIndex((prev) => media.length ? (prev + 1) % media.length : 0);
   }, [media.length]);
 
   const goPrev = useCallback(() => {
-    setLightboxIndex((prev) => (prev - 1 + media.length) % media.length);
+    setLightboxIndex((prev) => media.length ? (prev - 1 + media.length) % media.length : 0);
   }, [media.length]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    if (!loading && !project) {
+      const timer = setTimeout(() => navigate("/", { replace: true }), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [project, loading, navigate]);
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -97,6 +86,30 @@ const ProjectDetails = () => {
       document.body.style.overflow = "";
     };
   }, [lightboxOpen]);
+
+  if (loading) {
+    return (
+      <div className="bg-primary min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-400">Loading project details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <div className="bg-primary min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Project Not Found
+          </h1>
+          <p className="text-slate-400">Redirecting to homepage...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-primary min-h-screen">
@@ -163,7 +176,7 @@ const ProjectDetails = () => {
                           poster={item.poster}
                           className="w-full h-full object-cover"
                           playsInline
-                          muted
+                          controls
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
                           <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
@@ -251,9 +264,10 @@ const ProjectDetails = () => {
             <h2 className="text-accent text-[11px] uppercase tracking-[0.2em] font-medium mb-4">
               Overview
             </h2>
-            <p className="text-slate-300 text-[15px] leading-relaxed max-w-3xl">
-              {project.description}
-            </p>
+            <div 
+              className="text-slate-300 text-[15px] leading-relaxed max-w-3xl editor-content"
+              dangerouslySetInnerHTML={{ __html: project.description }}
+            />
           </motion.div>
 
           <motion.div variants={fadeIn("up", "spring", 0.5, 0.75)}>

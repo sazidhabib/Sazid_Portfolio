@@ -8,22 +8,21 @@ const ProjectsManager = ({ token }) => {
 
   // Form State
   const [showModal, setShowModal] = useState(false);
-  const [showMediaSelector, setShowMediaSelector] = useState(false);
+  const [mediaSelectorTarget, setMediaSelectorTarget] = useState(null);
   const [editId, setEditId] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
+  const [media, setMedia] = useState([]);
   const [sourceCodeLink, setSourceCodeLink] = useState('');
   const [liveLink, setLiveLink] = useState('');
   const [sortOrder, setSortOrder] = useState('0');
-  
+
   // Dynamic features list
   const [featuresText, setFeaturesText] = useState(''); // Line separated
-  
+
   // Dynamic tags list
-  const [tags, setTags] = useState([]); // [{ name, color }]
-  const [newTagName, setNewTagName] = useState('');
-  const [newTagColor, setNewTagColor] = useState('blue-text-gradient');
+  const [tagsText, setTagsText] = useState(''); // Comma separated tags
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -53,12 +52,12 @@ const ProjectsManager = ({ token }) => {
     setName('');
     setDescription('');
     setImage('');
+    setMedia([]);
     setSourceCodeLink('');
     setLiveLink('');
     setSortOrder('0');
     setFeaturesText('');
-    setTags([]);
-    setNewTagName('');
+    setTagsText('');
     setError('');
     setShowModal(true);
   };
@@ -68,21 +67,28 @@ const ProjectsManager = ({ token }) => {
     setName(project.name);
     setDescription(project.description);
     setImage(project.image || '');
+
+    let parsedMedia = [];
+    try {
+      parsedMedia = typeof project.media === 'string' ? JSON.parse(project.media) : project.media;
+    } catch (e) {
+      parsedMedia = project.media || [];
+    }
+    setMedia(parsedMedia);
+
     setSourceCodeLink(project.sourceCodeLink || '');
     setLiveLink(project.liveLink || '');
     setSortOrder(project.sortOrder.toString());
     setFeaturesText(project.features ? project.features.join('\n') : '');
-    
-    // Parse tags
+
     let parsedTags = [];
     try {
       parsedTags = typeof project.tags === 'string' ? JSON.parse(project.tags) : project.tags;
     } catch (e) {
       parsedTags = project.tags || [];
     }
-    setTags(parsedTags);
-    
-    setNewTagName('');
+    setTagsText(parsedTags.map(t => t.name).join(', '));
+
     setError('');
     setShowModal(true);
   };
@@ -104,14 +110,8 @@ const ProjectsManager = ({ token }) => {
     }
   };
 
-  const handleAddTag = () => {
-    if (!newTagName.trim()) return;
-    setTags([...tags, { name: newTagName.trim(), color: newTagColor }]);
-    setNewTagName('');
-  };
-
-  const handleRemoveTag = (index) => {
-    setTags(tags.filter((_, i) => i !== index));
+  const handleFormat = (command) => {
+    document.execCommand(command, false, null);
   };
 
   const handleSubmit = async (e) => {
@@ -125,11 +125,19 @@ const ProjectsManager = ({ token }) => {
       .map(f => f.trim())
       .filter(f => f.length > 0);
 
+    const colors = ['blue-text-gradient', 'green-text-gradient', 'pink-text-gradient'];
+    const tagsArray = tagsText
+      .split(',')
+      .map(t => t.trim())
+      .filter(t => t.length > 0)
+      .map((t, idx) => ({ name: t, color: colors[idx % colors.length] }));
+
     const payload = {
       name,
       description,
       image,
-      tags,
+      media,
+      tags: tagsArray,
       features: featuresArray,
       sourceCodeLink,
       liveLink,
@@ -224,12 +232,23 @@ const ProjectsManager = ({ token }) => {
                   </div>
 
                   <div className="w-full h-48 bg-white/5 overflow-hidden border-b border-white/5 relative">
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => { e.target.src = 'https://DAC.digital/wp-content/uploads/2023/11/react-logo-optimized.png'; }}
-                    />
+                    {project.image && project.image.match(/\.(mp4|webm|ogg)$/i) ? (
+                      <video
+                        src={project.image}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                        onError={(e) => { e.target.src = 'https://DAC.digital/wp-content/uploads/2023/11/react-logo-optimized.png'; }}
+                      />
+                    )}
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between gap-4">
@@ -280,7 +299,7 @@ const ProjectsManager = ({ token }) => {
       {/* Add/Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary/80 backdrop-blur-md px-4 overflow-y-auto pt-10 pb-10">
-          <div className="w-full max-w-2xl glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass my-auto animate-float">
+          <div className="w-full max-w-2xl glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass my-auto">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
@@ -326,7 +345,7 @@ const ProjectsManager = ({ token }) => {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowMediaSelector(true)}
+                      onClick={() => setMediaSelectorTarget('main')}
                       className="py-2.5 px-4 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-lg text-xs font-semibold transition-all"
                     >
                       Select
@@ -335,16 +354,91 @@ const ProjectsManager = ({ token }) => {
                 </div>
               </div>
 
+              {/* Media Gallery */}
+              <div className="flex flex-col gap-2.5 bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                <span className="text-white font-semibold text-xs">Project Media Gallery</span>
+                <p className="text-slate-500 text-[10px] italic -mt-1">Add multiple images or videos for the project details page.</p>
+
+                <div className="flex flex-col gap-2">
+                  {media.map((item, idx) => (
+                    <div key={idx} className="flex gap-2 items-center bg-white/5 border border-white/10 p-2 rounded-lg">
+                      <select
+                        value={item.type}
+                        onChange={(e) => {
+                          const newMedia = [...media];
+                          newMedia[idx].type = e.target.value;
+                          setMedia(newMedia);
+                        }}
+                        className="bg-primary border border-white/10 py-1.5 px-2 text-white rounded outline-none text-xs w-24"
+                      >
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                      </select>
+                      <input
+                        type="text"
+                        value={item.src}
+                        onChange={(e) => {
+                          const newMedia = [...media];
+                          newMedia[idx].src = e.target.value;
+                          setMedia(newMedia);
+                        }}
+                        placeholder="URL (https://...)"
+                        className="bg-black/20 border border-white/10 py-1.5 px-2 placeholder:text-slate-500 text-white rounded outline-none text-xs flex-1"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setMediaSelectorTarget(idx)}
+                        className="py-1.5 px-3 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded text-[10px] font-semibold transition-all"
+                      >
+                        Select
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMedia(media.filter((_, i) => i !== idx));
+                        }}
+                        className="text-red-400 hover:text-red-300 font-bold px-2 ml-1"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                  <div className="flex gap-2 mt-1">
+                    <button
+                      type="button"
+                      onClick={() => setMedia([...media, { type: 'image', src: '' }])}
+                      className="py-1.5 px-3 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded text-xs transition-all flex-1"
+                    >
+                      + Add Image
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMedia([...media, { type: 'video', src: '' }])}
+                      className="py-1.5 px-3 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded text-xs transition-all flex-1"
+                    >
+                      + Add Video
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex flex-col">
                 <span className="text-white font-medium mb-1.5 text-xs">Project Overview Description</span>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Detailed project summary..."
-                  rows={3}
-                  className="bg-white/5 border border-white/10 py-2.5 px-4 placeholder:text-slate-500 text-white rounded-lg outline-none focus:border-accent/40 transition-colors text-sm resize-none font-medium"
-                  required
-                />
+                <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden flex flex-col focus-within:border-accent/40 transition-colors resize-y">
+                  <div className="flex gap-2 p-2 border-b border-white/10 bg-black/20 flex-wrap">
+                    <button type="button" onClick={() => handleFormat('bold')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded font-bold" title="Bold">B</button>
+                    <button type="button" onClick={() => handleFormat('italic')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded italic" title="Italic">I</button>
+                    <button type="button" onClick={() => handleFormat('underline')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded underline" title="Underline">U</button>
+                    <button type="button" onClick={() => handleFormat('insertUnorderedList')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded" title="Bullet List">• List</button>
+                  </div>
+                  <div
+                    contentEditable
+                    className="p-4 text-sm text-slate-300 min-h-[120px] outline-none editor-content"
+                    onInput={(e) => setDescription(e.currentTarget.innerHTML)}
+                    onBlur={(e) => setDescription(e.currentTarget.innerHTML)}
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -371,57 +465,16 @@ const ProjectsManager = ({ token }) => {
                 </div>
               </div>
 
-              {/* Tag Builder */}
-              <div className="flex flex-col gap-2.5 bg-white/[0.02] border border-white/5 rounded-xl p-4">
-                <span className="text-white font-semibold text-xs">Project Tags</span>
-                
-                {/* Active Tags */}
-                <div className="flex flex-wrap gap-1.5">
-                  {tags.length === 0 ? (
-                    <span className="text-slate-500 text-xs italic">No tags added. Use the inputs below to insert.</span>
-                  ) : (
-                    tags.map((tag, idx) => (
-                      <span key={idx} className={`text-xs font-semibold py-1 px-2.5 rounded-full flex items-center gap-1.5 ${tag.color}`}>
-                        #{tag.name}
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveTag(idx)}
-                          className="hover:text-red-400 font-bold"
-                          title="Remove Tag"
-                        >
-                          &times;
-                        </button>
-                      </span>
-                    ))
-                  )}
-                </div>
-
-                {/* Tag Form Inputs */}
-                <div className="flex gap-2 items-center mt-2">
-                  <input
-                    type="text"
-                    value={newTagName}
-                    onChange={(e) => setNewTagName(e.target.value)}
-                    placeholder="Tag name (e.g. Next.js)"
-                    className="bg-white/5 border border-white/10 py-2 px-3 placeholder:text-slate-500 text-white rounded-lg outline-none focus:border-accent/40 transition-colors text-sm flex-1"
-                  />
-                  <select
-                    value={newTagColor}
-                    onChange={(e) => setNewTagColor(e.target.value)}
-                    className="bg-primary border border-white/10 py-2 px-3 text-white rounded-lg outline-none text-sm w-36"
-                  >
-                    <option value="blue-text-gradient">Blue</option>
-                    <option value="green-text-gradient">Green</option>
-                    <option value="pink-text-gradient">Pink</option>
-                  </select>
-                  <button
-                    type="button"
-                    onClick={handleAddTag}
-                    className="py-2 px-4 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-lg text-xs font-bold transition-all h-full"
-                  >
-                    Add
-                  </button>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-white font-medium mb-1.5 text-xs">Project Tags (Comma separated)</span>
+                <input
+                  type="text"
+                  value={tagsText}
+                  onChange={(e) => setTagsText(e.target.value)}
+                  placeholder="e.g. React, Next.js, Node.js"
+                  className="bg-white/5 border border-white/10 py-2 px-3 placeholder:text-slate-500 text-white rounded-lg outline-none focus:border-accent/40 transition-colors text-sm w-full"
+                />
+                <p className="text-slate-500 text-[10px] mt-1 italic">Colors will be assigned automatically.</p>
               </div>
 
               <div className="flex flex-col">
@@ -430,8 +483,8 @@ const ProjectsManager = ({ token }) => {
                   value={featuresText}
                   onChange={(e) => setFeaturesText(e.target.value)}
                   placeholder="Centralized state management using Redux&#10;Stripe secure payment gate integrations"
-                  rows={3}
-                  className="bg-white/5 border border-white/10 py-2.5 px-4 placeholder:text-slate-500 text-white rounded-lg outline-none focus:border-accent/40 transition-colors text-sm resize-none font-medium"
+                  rows={5}
+                  className="bg-white/5 border border-white/10 py-2.5 px-4 placeholder:text-slate-500 text-white rounded-lg outline-none focus:border-accent/40 transition-colors text-sm resize-y font-medium w-full min-h-[100px]"
                   required
                 />
               </div>
@@ -470,27 +523,32 @@ const ProjectsManager = ({ token }) => {
       )}
 
       {/* Media Selector Modal */}
-      {showMediaSelector && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-primary/90 backdrop-blur-md px-4 overflow-y-auto pt-10 pb-10">
-          <div className="w-full max-w-4xl glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass my-auto max-h-[85vh] overflow-y-auto">
+      {mediaSelectorTarget !== null && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-primary/90 backdrop-blur-sm px-4 py-10 overflow-y-auto">
+          <div className="w-full max-w-5xl glass-card rounded-2xl p-6 relative border border-white/10 shadow-glass my-auto">
             <button
-              type="button"
-              onClick={() => setShowMediaSelector(false)}
+              onClick={() => setMediaSelectorTarget(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
             <h3 className="text-xl font-bold text-white mb-6">Select Image from Library</h3>
-            
+
             <MediaLibrary
               token={token}
               isSelectMode={true}
               onSelect={(url) => {
-                setImage(url);
-                setShowMediaSelector(false);
+                if (mediaSelectorTarget === 'main') {
+                  setImage(url);
+                } else if (typeof mediaSelectorTarget === 'number') {
+                  const newMedia = [...media];
+                  newMedia[mediaSelectorTarget].src = url;
+                  setMedia(newMedia);
+                }
+                setMediaSelectorTarget(null);
               }}
             />
           </div>
