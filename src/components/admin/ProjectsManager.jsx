@@ -1,5 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MediaLibrary from './MediaLibrary';
+
+const RichTextEditor = ({ value, onChange }) => {
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      editorRef.current.innerHTML = value || '';
+    }
+  }, [value]);
+
+  return (
+    <div
+      ref={editorRef}
+      contentEditable
+      className="p-4 text-sm text-slate-300 min-h-[120px] outline-none editor-content"
+      onInput={(e) => onChange(e.currentTarget.innerHTML)}
+      onBlur={(e) => onChange(e.currentTarget.innerHTML)}
+    />
+  );
+};
 
 const ProjectsManager = ({ token }) => {
   const [projects, setProjects] = useState([]);
@@ -431,12 +451,9 @@ const ProjectsManager = ({ token }) => {
                     <button type="button" onClick={() => handleFormat('underline')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded underline" title="Underline">U</button>
                     <button type="button" onClick={() => handleFormat('insertUnorderedList')} className="px-2 py-1 text-xs text-white hover:bg-white/10 rounded" title="Bullet List">• List</button>
                   </div>
-                  <div
-                    contentEditable
-                    className="p-4 text-sm text-slate-300 min-h-[120px] outline-none editor-content"
-                    onInput={(e) => setDescription(e.currentTarget.innerHTML)}
-                    onBlur={(e) => setDescription(e.currentTarget.innerHTML)}
-                    dangerouslySetInnerHTML={{ __html: description }}
+                  <RichTextEditor
+                    value={description}
+                    onChange={setDescription}
                   />
                 </div>
               </div>
