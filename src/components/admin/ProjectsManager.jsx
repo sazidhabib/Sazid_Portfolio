@@ -215,7 +215,7 @@ const ProjectsManager = ({ token }) => {
       {loading ? (
         <div className="text-slate-400 text-center py-20">Loading projects database...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {projects.length === 0 ? (
             <div className="col-span-full text-slate-500 text-center py-16 glass-card rounded-2xl">
               No projects in the database. Use the "Add Project" button or seed initial data.
@@ -228,6 +228,13 @@ const ProjectsManager = ({ token }) => {
               } catch (e) {
                 parsedTags = project.tags || [];
               }
+
+              // Strip HTML and truncate description
+              const plainTextDesc = (project.description || '').replace(/<[^>]+>/g, '');
+              const shortDesc = plainTextDesc.length > 150 
+                ? plainTextDesc.substring(0, 150) + '...' 
+                : plainTextDesc;
+
               return (
                 <div key={project.id} className="glass-card rounded-xl overflow-hidden border border-white/5 hover:border-accent/25 transition-all duration-300 flex flex-col group relative">
                   <div className="absolute top-3 right-3 z-20 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -277,7 +284,7 @@ const ProjectsManager = ({ token }) => {
                         <h3 className="text-lg font-bold text-white leading-tight">{project.name}</h3>
                         <span className="text-slate-500 text-xs font-medium">Order: {project.sortOrder}</span>
                       </div>
-                      <p className="text-slate-400 text-sm line-clamp-3 leading-relaxed">{project.description}</p>
+                      <p className="text-slate-400 text-sm leading-relaxed">{shortDesc}</p>
                     </div>
 
                     <div className="flex flex-col gap-3">
